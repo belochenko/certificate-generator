@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export function LoginWithSSORequest() {
   return (
-    <div key="1" className="flex h-screen w-full items-center justify-center">
+    <div key="1" className="flex w-full items-center justify-center">
       <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
         <div className="space-y-4">
           <div className="space-y-2">
