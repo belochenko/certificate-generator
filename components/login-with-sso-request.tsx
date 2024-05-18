@@ -3,7 +3,7 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { signIn } from "@/auth"
+import { signIn } from "@/lib/auth";
 
 export function LoginWithSSORequest() {
   return (
@@ -40,13 +40,7 @@ export function LoginWithSSORequest() {
             </div>
           </div>
           <div>
-            
-            <Button
-              className="w-full"
-              variant="outline"
-              onClick={handleLogin}
-              
-            >
+            <Button className="w-full" variant="outline" onClick={handleLogin}>
               <ChromeIcon className="mr-2 h-4 w-4" />
               Sign in with Google
             </Button>
@@ -85,11 +79,9 @@ function handleLogin(props) {
     <form
       {...props}
       action={async () => {
-      "use server"
-      await signIn("google")
+        "use server";
+        await signIn("google");
       }}
-
-  >        
-    </form>
+    ></form>
   );
 }
