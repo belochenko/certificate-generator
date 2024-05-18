@@ -3,6 +3,7 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { signIn } from "@/auth"
 
 export function LoginWithSSORequest() {
   return (
@@ -39,10 +40,12 @@ export function LoginWithSSORequest() {
             </div>
           </div>
           <div>
+            
             <Button
               className="w-full"
               variant="outline"
-              // onClick={handleLogin}
+              onClick={handleLogin}
+              
             >
               <ChromeIcon className="mr-2 h-4 w-4" />
               Sign in with Google
@@ -74,5 +77,19 @@ function ChromeIcon(props) {
       <line x1="3.95" x2="8.54" y1="6.06" y2="14" />
       <line x1="10.88" x2="15.46" y1="21.94" y2="14" />
     </svg>
+  );
+}
+
+function handleLogin(props) {
+  return (
+    <form
+      {...props}
+      action={async () => {
+      "use server"
+      await signIn("google")
+      }}
+
+  >        
+    </form>
   );
 }
