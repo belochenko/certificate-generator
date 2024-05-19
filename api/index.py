@@ -3,11 +3,13 @@ import os
 from fastapi import FastAPI, Request, Depends, HTTPException, status
 from fastapi_sso.sso.google import GoogleSSO
 
+from utils.configs import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+
 
 app = FastAPI()
 
 def get_google_sso() -> GoogleSSO:
-    return GoogleSSO(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, redirect_uri="http://localhost:8000/api/auth/callback")
+    return GoogleSSO(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, redirect_uri="http://localhost:3000/api/auth/callback")
 
 
 # Function to verify if user is authenticated
