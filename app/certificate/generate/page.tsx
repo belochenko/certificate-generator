@@ -5,7 +5,7 @@ import {
   CertificateData,
 } from "@/lib/certificate-processing";
 
-import { CertificateGenerationForm } from "@/components/certificate-generation-form";
+import CertificateGenerationForm from "@/components/CertificateGenerationForm";
 
 export default function GeneratePage() {
   // const [templateUrl, setTemplateUrl] = useState<string>("");
@@ -38,16 +38,8 @@ export default function GeneratePage() {
   // };
 
   return (
-    <CertificateGenerationForm />
-    // <div>
-    //   <h1>Generate Certificate</h1>
-    //   <input
-    //     type="text"
-    //     placeholder="Enter S3 template URL"
-    //     value={templateUrl}
-    //     onChange={(e) => setTemplateUrl(e.target.value)}
-    //   />
-    //   <button onClick={handleGeneratePdf}>Generate PDF</button>
-    // </div>
+    <div>
+      <CertificateGenerationForm />
+    </div>
   );
 }

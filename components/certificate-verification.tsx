@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,68 +9,16 @@ import {
   Select,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { queryDB } from "@/lib/db";
 
-export function CertificateVerification() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    documentNumber: "",
-    issuer: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: value,
-    });
-  };
-
-  const handleSelectChange = (value) => {
-    setFormData({
-      ...formData,
-      issuer: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const res = await queryDB(
-        "INSERT INTO Certificates (fullName, documentNumber, issuer) VALUES ($1, $2, $3)",
-        [formData.fullName, formData.documentNumber, formData.issuer],
-      );
-      if (res.error) {
-        throw new Error(res.error);
-      }
-      // handle successful submission (e.g., show a success message)
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const isValidDocumentNumber = (documentNumber) => {
-    const regex = /^(ITS|CCU)-(\d{3})-(\d{6})$/;
-    return regex.test(documentNumber);
-  };
-
-  const [documentNumber, setDocumentNumber] = useState("");
-  const [isValid, setIsValid] = useState(true);
-
-  const handleDocumentNumberChange = (event) => {
-    const value = event.target.value;
-    setDocumentNumber(value);
-    setIsValid(isValidDocumentNumber(value));
-  };
-
+export function CertificateVerification({
+  formData,
+  handleInputChange,
+  handleSelectChange,
+  handleSubmit,
+  isLoading,
+  error,
+  isValid,
+}) {
   return (
     <div className="mx-auto max-w-md space-y-6 py-12">
       <div className="space-y-2 text-center">
@@ -100,13 +47,16 @@ export function CertificateVerification() {
             onChange={handleInputChange}
             required
           />
+          {!isValid && (
+            <p style={{ color: "red" }}>Invalid document number format</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="issuer">Issuer</Label>
           <Select
             id="issuer"
             value={formData.issuer}
-            onValueChange={handleDocumentNumberChange}
+            onValueChange={handleSelectChange}
             required
           >
             <SelectTrigger>
