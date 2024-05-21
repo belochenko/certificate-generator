@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,8 +10,68 @@ import {
   Select,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { queryDB } from "@/lib/db";
 
 export function CertificateVerification() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    documentNumber: "",
+    issuer: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value,
+    });
+  };
+
+  const handleSelectChange = (value) => {
+    setFormData({
+      ...formData,
+      issuer: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await queryDB(
+        "INSERT INTO Certificates (fullName, documentNumber, issuer) VALUES ($1, $2, $3)",
+        [formData.fullName, formData.documentNumber, formData.issuer],
+      );
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      // handle successful submission (e.g., show a success message)
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isValidDocumentNumber = (documentNumber) => {
+    const regex = /^(ITS|CCU)-(\d{3})-(\d{6})$/;
+    return regex.test(documentNumber);
+  };
+
+  const [documentNumber, setDocumentNumber] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
+  const handleDocumentNumberChange = (event) => {
+    const value = event.target.value;
+    setDocumentNumber(value);
+    setIsValid(isValidDocumentNumber(value));
+  };
+
   return (
     <div className="mx-auto max-w-md space-y-6 py-12">
       <div className="space-y-2 text-center">
@@ -18,32 +80,50 @@ export function CertificateVerification() {
           Enter your information to verify your certificate.
         </p>
       </div>
-      <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="full-name">Full Name</Label>
-          <Input id="full-name" placeholder="John Doe" required />
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input
+            id="fullName"
+            placeholder="John Doe"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            required
+          />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="document-number">Document Number</Label>
-          <Input id="document-number" placeholder="123456789" required />
+          <Label htmlFor="documentNumber">Document Number</Label>
+          <Input
+            id="documentNumber"
+            placeholder="ITS-01-000000"
+            value={formData.documentNumber}
+            onChange={handleInputChange}
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="issuer">Issuer</Label>
-          <Select id="issuer" required>
+          <Select
+            id="issuer"
+            value={formData.issuer}
+            onValueChange={handleDocumentNumberChange}
+            required
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select issuer" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="government">IT2School</SelectItem>
-              <SelectItem value="university">Codeclub</SelectItem>
-              <SelectItem value="employer">Other</SelectItem>
+              <SelectItem value="IT2School">IT2School</SelectItem>
+              <SelectItem value="Codeclub">Codeclub</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
             </SelectContent>
           </Select>
         </div>
-        <Button className="w-full" type="submit">
-          Verify
+        <Button className="w-full" type="submit" disabled={isLoading}>
+          {isLoading ? "Verifying..." : "Verify"}
         </Button>
-      </div>
+        {error && <p className="text-red-500">{error}</p>}
+      </form>
     </div>
   );
 }
