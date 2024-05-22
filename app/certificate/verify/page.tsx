@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { CertificateVerification } from "@/components/certificate-verification";
-import { DocumentDetailsVerification } from "@/components/document-details-verification";
+import { CertificateVerification } from "@/components/CertificateVerification";
+import { DocumentDetailsVerification } from "@/components/DocumentDetailsVerification";
 import { queryDB } from "@/lib/db";
 
 export default function Verification() {

@@ -22,24 +22,24 @@ export function CertificateVerification({
   return (
     <div className="mx-auto max-w-md space-y-6 py-12">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">Certification Verification</h1>
+        <h1 className="text-3xl font-bold">Перевірка сертифіката</h1>
         <p className="text-gray-500 dark:text-gray-400">
-          Enter your information to verify your certificate.
+          Введіть свої дані для перевірки сертифіката.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="fullName">Full Name</Label>
+          <Label htmlFor="fullName">Ім&apos;я та Призвіще</Label>
           <Input
             id="fullName"
-            placeholder="John Doe"
+            placeholder="Володимир Великий"
             value={formData.fullName}
             onChange={handleInputChange}
             required
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="documentNumber">Document Number</Label>
+          <Label htmlFor="documentNumber">Номер документа</Label>
           <Input
             id="documentNumber"
             placeholder="ITS-01-000000"
@@ -48,11 +48,11 @@ export function CertificateVerification({
             required
           />
           {!isValid && (
-            <p style={{ color: "red" }}>Invalid document number format</p>
+            <p style={{ color: "red" }}>Неправильний формат номера документа</p>
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="issuer">Issuer</Label>
+          <Label htmlFor="issuer">Організація що видала</Label>
           <Select
             id="issuer"
             value={formData.issuer}
@@ -65,7 +65,7 @@ export function CertificateVerification({
             <SelectContent>
               <SelectItem value="IT2School">IT2School</SelectItem>
               <SelectItem value="Codeclub">Codeclub</SelectItem>
-              <SelectItem value="Other">Other</SelectItem>
+              <SelectItem value="Other">Інша</SelectItem>
             </SelectContent>
           </Select>
         </div>

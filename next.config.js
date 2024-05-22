@@ -1,32 +1,20 @@
-/** @type {import('next').NextConfig} */
+require("dotenv").config();
 const nextConfig = {
+  env: {
+    STORJ_ENDPOINT: process.env.STORJ_ENDPOINT,
+    STORJ_ACCESS_KEY: process.env.STORJ_ACCESS_KEY,
+    STORJ_SECRET_KEY: process.env.STORJ_SECRET_KEY,
+  },
   images: {
-    remotePatterns: [{ hostname: "*.public.blob.vercel-storage.com" }],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.gateway.storjshare.io",
+      },
+    ],
   },
   rewrites: async () => {
-    return [
-      {
-        source: "/api/:path*",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/api/:path*"
-            : "/api/",
-      },
-      {
-        source: "/docs",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/docs"
-            : "/api/docs",
-      },
-      {
-        source: "/openapi.json",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/openapi.json"
-            : "/api/openapi.json",
-      },
-    ];
+    return [];
   },
 };
 

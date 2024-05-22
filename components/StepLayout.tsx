@@ -10,9 +10,9 @@ const StepLayout = ({ children, step, nextStep, prevStep, isLastStep }) => (
             <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
               <div className="space-y-2">
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Step {step}
+                  Крок {step}
                 </div>
-                <div className="text-lg font-semibold">Step Details</div>
+                <div className="text-lg font-semibold">Деталі кроку</div>
               </div>
               <div className="mt-4 flex flex-col space-y-2">
                 <div className="flex items-center space-x-2">
@@ -20,7 +20,7 @@ const StepLayout = ({ children, step, nextStep, prevStep, isLastStep }) => (
                     className={`h-2 w-2 rounded-full ${step >= 1 ? "bg-blue-500" : "bg-gray-400 dark:bg-gray-600"}`}
                   />
                   <div className="text-sm text-gray-500 dark:text-gray-400">
-                    Select a template
+                    Виберіть шаблон
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -28,7 +28,7 @@ const StepLayout = ({ children, step, nextStep, prevStep, isLastStep }) => (
                     className={`h-2 w-2 rounded-full ${step >= 2 ? "bg-blue-500" : "bg-gray-400 dark:bg-gray-600"}`}
                   />
                   <div className="text-sm text-gray-500 dark:text-gray-400">
-                    Enter details
+                    Введіть дані
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -36,7 +36,7 @@ const StepLayout = ({ children, step, nextStep, prevStep, isLastStep }) => (
                     className={`h-2 w-2 rounded-full ${step >= 3 ? "bg-blue-500" : "bg-gray-400 dark:bg-gray-600"}`}
                   />
                   <div className="text-sm text-gray-500 dark:text-gray-400">
-                    Review and submit
+                    Перегляньте та подайте
                   </div>
                 </div>
               </div>
@@ -52,7 +52,7 @@ const StepLayout = ({ children, step, nextStep, prevStep, isLastStep }) => (
                   onClick={prevStep}
                   className="bg-gray-300 text-gray-900 hover:bg-gray-200"
                 >
-                  Previous Step
+                  Попередній етап
                 </Button>
               )}
               {!isLastStep && (
@@ -60,7 +60,7 @@ const StepLayout = ({ children, step, nextStep, prevStep, isLastStep }) => (
                   onClick={nextStep}
                   className="bg-gray-900 text-white hover:bg-gray-800"
                 >
-                  Next Step
+                  Наступний етап
                 </Button>
               )}
             </div>

@@ -5,7 +5,7 @@ export function DocumentDetailsVerification() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-6xl px-6 py-4 grid md:grid-cols-2 gap-6">
-        <div className="relative h-[80vh] w-full overflow-auto rounded-lg border border-gray-200 dark:border-gray-700 dark:border-gray-800">
+        <div className="relative h-[80vh] w-full overflow-auto rounded-lg border border-gray-200 dark:border-gray-700">
           <div className="absolute top-0 left-0 h-full w-full bg-white dark:bg-gray-900">
             <Image
               alt="Document page"
