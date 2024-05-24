@@ -1,18 +1,32 @@
 import { PDFDocument } from "pdf-lib";
 import { JSDOM } from "jsdom";
 import dompurify from "dompurify";
+import { listTemplates } from "@/lib/storj";
 
 export interface CertificateData {
-  student_full_name: string;
+  issued_to: string;
   course_name: string;
   mentor_full_name: string;
-  location_coordinator_anme: string;
+  location_coordinator: string;
   unique_certificate_id: string;
   issue_date: string;
 }
 
 export class CertificateGenerator {
+  static async fetchTemplates() {
+    try {
+      const svgKeys = await listTemplates(
+        "certificates-templates-preview",
+        ".png",
+      );
+      const publicUrls = svgKeys.map((key) => `${key}`);
+    } catch (error) {
+      console.error("Failed to fetch templates:", error);
+    }
+  }
+
   static async fetchTemplate(templateUrl: string): Promise<string> {
+    const
     const response = await fetch(templateUrl);
     return await response.text();
   }

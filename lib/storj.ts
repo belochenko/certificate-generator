@@ -8,7 +8,10 @@ const s3 = new S3({
   signatureVersion: "v4",
 });
 
-export async function listImages(bucketName: string): Promise<string[]> {
+export async function listTemplates(
+  bucketName: string,
+  extension: string,
+): Promise<string[]> {
   const params = {
     Bucket: bucketName,
     Prefix: "",
@@ -16,7 +19,7 @@ export async function listImages(bucketName: string): Promise<string[]> {
 
   try {
     const data = await s3.listObjectsV2(params).promise();
-    return data.Contents.filter((item) => item.Key.endsWith(".png")).map(
+    return data.Contents.filter((item) => item.Key.endsWith(extension)).map(
       (item) => {
         const signedUrl = s3.getSignedUrl("getObject", {
           Bucket: bucketName,
