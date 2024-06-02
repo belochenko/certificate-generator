@@ -1,20 +1,20 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ChromeIcon } from "@/components/ChromeLogo";
 
+// import { signIn, auth } from "@/auth"
+import { signIn } from "next-auth/react"
+
 export default function Home() {
-  const { data: session } = useSession();
+  // const session = auth();
 
   return (
     <main className="flex min-h-screen items-center justify-between p-24">
       <div key="1" className="flex w-full items-center justify-center">
         <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
           <div className="space-y-4">
-            {!session ? (
-              <>
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold">Login</h2>
                   <p className="text-gray-500 dark:text-gray-400">
@@ -48,23 +48,12 @@ export default function Home() {
                   <Button
                     className="w-full"
                     variant="outline"
-                    onClick={() => signIn("google")}
+                    onClick={() => signIn("google", { redirectTo: "/login" })}
                   >
                     <ChromeIcon />
                     Sign in with Google
                   </Button>
                 </div>
-              </>
-            ) : (
-              <div>
-                <h2 className="text-2xl font-bold">
-                  Welcome, {session.user?.name}
-                </h2>
-                <p className="text-gray-500 dark:text-gray-400">
-                  You are logged in with {session.user?.email}
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </div>
