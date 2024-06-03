@@ -48,7 +48,7 @@ export default function Home() {
                   <Button
                     className="w-full"
                     variant="outline"
-                    onClick={() => signIn("google", { redirectTo: "/login" })}
+                    onClick={() => signIn("google", { callbackUrl: "/certificate/generate", redirect: true })}
                   >
                     <ChromeIcon />
                     Sign in with Google
