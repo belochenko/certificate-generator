@@ -17,6 +17,19 @@ const { handlers, signIn, signOut, auth } = NextAuth({
     },
   })
 ],
+callbacks: {
+  async jwt({user, token}) {
+      if (user) {
+          token.user = user;
+      }
+      return token;
+  },
+  async session({session, token}: any) {
+      session.user = token.user;
+      return session;
+  },
+},
+debug: process.env.NODE_ENV === "development",
 });
 
 export { handlers, signIn, signOut, auth };

@@ -4,12 +4,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ChromeIcon } from "@/components/ChromeLogo";
 
-// import { signIn, auth } from "@/auth"
 import { signIn } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  // const session = auth();
+  const router = useRouter();
 
+  const handleSignIn = async () => {
+    const response = await signIn("google", {
+      redirect: true, // We handle redirection manually
+    });
+
+  };
+  
   return (
     <main className="flex min-h-screen items-center justify-between p-24">
       <div key="1" className="flex w-full items-center justify-center">
@@ -48,7 +55,7 @@ export default function Home() {
                   <Button
                     className="w-full"
                     variant="outline"
-                    onClick={() => signIn("google", { callbackUrl: "/certificate/generate", redirect: true })}
+                    onClick={handleSignIn}
                   >
                     <ChromeIcon />
                     Sign in with Google

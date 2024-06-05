@@ -60,18 +60,22 @@ export default function vercelPostgresAdapter(): Adapter {
       providerAccountId: string;
     }): Promise<AdapterUser | null> => {
       const { rows } = await sql`
-      SELECT u.* 
-      FROM users u join accounts a on u.id = a.user_id 
-      WHERE a.provider_id = ${provider} 
-      AND a.provider_account_id = ${providerAccountId}`;
-      const user = rows[0]
-        ? {
-            email: rows[0].email,
-            emailVerified: rows[0].email_verified,
-            id: rows[0].id,
-          }
-        : null;
-      return user;
+        SELECT u.* 
+        FROM users u 
+        JOIN accounts a ON u.id = a.user_id 
+        WHERE a.provider_id = ${provider} 
+        AND a.provider_account_id = ${providerAccountId}`;
+    
+      if (rows.length > 0) {
+        const user = {
+          email: rows[0].email,
+          emailVerified: rows[0].email_verified,
+          id: rows[0].id,
+        };
+        return user;
+      } else {
+        return null;
+      }
     };
 
     const updateUser = async (
